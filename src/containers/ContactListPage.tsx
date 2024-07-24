@@ -1,12 +1,11 @@
-import {useAppDispatch} from '../app/hooks';
+import {useAppDispatch, useAppSelector} from '../app/hooks';
 import {useEffect} from 'react';
 import {fetchContacts} from '../store/contactThunk';
-import {useSelector} from 'react-redux';
 import {selectNewContacts} from '../store/contactSlice';
 
 const ContactListPage = () => {
   const dispatch = useAppDispatch();
-  const contacts = useSelector(selectNewContacts);
+  const contacts = useAppSelector(selectNewContacts);
 
   useEffect(() => {
     dispatch(fetchContacts());
@@ -17,7 +16,7 @@ const ContactListPage = () => {
       <h1 className="my-3">Contacts</h1>
       <div className="list-group border-1">
         {contacts.map(contact => (
-          <div className="list-group-item list-group-item-action" style={{margin: '10px 0'}}>
+          <div key={contact.id} className="list-group-item list-group-item-action" style={{margin: '10px 0'}}>
             <img
               src={contact.photo}
               alt={contact.name}
